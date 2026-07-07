@@ -2,7 +2,7 @@
 
 my corner of the internet.
 
-**live:** [barbie-site.vercel.app](https://barbie-site.vercel.app)
+**live:** [barb-portfolio-lake.vercel.app]
 
 ## what's inside
 
