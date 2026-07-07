@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BARBIE_ZHU // engineer, occasionally airborne</title>
+<meta name="description" content="Barbie Zhu. engineer. markets, plasma, dance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,800;1,400&family=Inter:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f6f2;
+  --ink:#101012;
+  --blue:#2433ff;
+  --blue-soft:rgba(36,51,255,.08);
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',sans-serif;
+  --hand:'Caveat',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-weight:400;
+  overflow-x:hidden;
+  cursor:none;
+}
+@media (hover:none),(pointer:coarse){ body{cursor:auto} .cursor,.cursor-ring{display:none!important} }
+::selection{background:var(--blue);color:#fff}
+a{color:inherit;text-decoration:none;cursor:none}
+@media (hover:none){ a,button{cursor:auto} }
+button{cursor:none;font-family:inherit}
+
+/* ---------- grain ---------- */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:9998;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 8s steps(10) infinite}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)}10%{transform:translate(-5%,-10%)}20%{transform:translate(-15%,5%)}
+  30%{transform:translate(7%,-25%)}40%{transform:translate(-5%,25%)}50%{transform:translate(-15%,10%)}
+  60%{transform:translate(15%,0)}70%{transform:translate(0,15%)}80%{transform:translate(3%,25%)}90%{transform:translate(-10%,10%)}
+}
+
+/* ---------- cursor ---------- */
+.cursor{position:fixed;width:8px;height:8px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .15s}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s,opacity .2s;opacity:.6}
+body.cursor-hover .cursor{width:14px;height:14px}
+body.cursor-hover .cursor-ring{width:48px;height:48px;opacity:1}
+
+/* ---------- scroll progress ---------- */
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--blue);width:0%;z-index:9997}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;top:3px;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px;font-family:var(--mono);font-size:12px;
+  mix-blend-mode:difference;color:#fff;
+}
+.logo{font-weight:800;font-size:15px;letter-spacing:-.5px;user-select:none}
+.logo:hover{color:#7f8bff}
+nav{display:flex;gap:22px}
+nav a{position:relative;letter-spacing:.5px}
+nav a::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:1.5px;background:#fff;transition:width .25s}
+nav a:hover::after{width:100%}
+.clock{letter-spacing:1px;opacity:.85}
+@media(max-width:760px){ nav{display:none} }
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;position:relative}
+.hero-label{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--blue);margin-bottom:18px}
+.hero h1{
+  font-family:var(--mono);font-weight:800;line-height:.95;
+  font-size:clamp(52px,11.5vw,160px);letter-spacing:-.04em;user-select:none;
+}
+.hero h1 .ln{display:block}
+.hero h1 span.ch{display:inline-block;transition:transform .18s,color .18s}
+.hero h1 span.ch:hover{color:var(--blue);transform:translateY(-.12em) rotate(-4deg)}
+.hero-sub{margin-top:26px;font-family:var(--mono);font-size:clamp(14px,1.8vw,19px);display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.hero-sub .static{opacity:.55}
+.hero-sub .type{color:var(--blue);font-weight:600;border-right:2px solid var(--blue);padding-right:3px;white-space:nowrap}
+.hero-btns{margin-top:44px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.5px;
+  padding:13px 26px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  position:relative;overflow:hidden;transition:color .25s,border-color .25s,transform .15s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn::before{content:'';position:absolute;inset:0;background:var(--blue);transform:translateY(101%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:-1}
+.btn:hover{color:#fff;border-color:var(--blue)}
+.btn:hover::before{transform:translateY(0)}
+.btn:active{transform:scale(.96)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{color:#fff}
+/* ---------- live prediction market widget ---------- */
+.mkt{position:absolute;right:8vw;top:26%;width:250px;border:1.5px solid var(--ink);background:var(--paper);padding:16px 18px;font-family:var(--mono);transform:rotate(3deg);transition:transform .25s,box-shadow .25s;user-select:none;z-index:5}
+.mkt:hover{transform:rotate(0deg) translateY(-4px);box-shadow:5px 5px 0 var(--blue)}
+.mkt-h{font-size:10px;letter-spacing:2px;color:var(--blue);font-weight:600}
+.mkt-q{font-size:12.5px;font-weight:600;margin:8px 0 12px;line-height:1.5}
+.mkt-row{display:flex;justify-content:space-between;font-size:12px;font-weight:600}
+.mkt-yes{color:var(--blue)}
+.mkt-no{opacity:.55}
+.mkt-bar{height:6px;border:1px solid var(--ink);margin:10px 0;overflow:hidden}
+.mkt-fill{height:100%;background:var(--blue);width:15%;transition:width .3s}
+.mkt-f{font-size:9.5px;letter-spacing:.5px;opacity:.5}
+@media(max-width:860px){.mkt{position:static;transform:none;margin-top:36px;width:min(300px,100%)}}
+.scroll-hint{position:absolute;bottom:28px;left:6vw;font-family:var(--mono);font-size:11px;letter-spacing:2px;opacity:.45;animation:bob 2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ---------- marquee ---------- */
+.marquee{background:var(--ink);color:var(--paper);overflow:hidden;padding:13px 0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.marquee-track{display:flex;gap:0;white-space:nowrap;animation:scrollx 22s linear infinite;font-family:var(--mono);font-size:13px;letter-spacing:2px}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span{padding:0 18px}
+.marquee-track .dot{color:var(--blue)}
+@keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- poster map ---------- */
+.map-sec{padding:70px 4vw 40px;position:relative}
+.map-sec svg{width:100%;height:auto;display:block;max-width:1250px;margin:0 auto}
+.mp-head{font-family:var(--sans);font-weight:800;font-size:66px;letter-spacing:1px;fill:var(--ink)}
+.mp-lab{font-family:var(--mono);font-weight:600;font-size:16px;letter-spacing:3px;fill:var(--ink)}
+.mp-note{font-family:var(--sans);font-weight:600;font-size:20px;fill:var(--ink);opacity:.8}
+.mp-mini{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:1.5px;fill:var(--ink);opacity:.9}
+.mp-cap{font-family:var(--mono);font-size:14px;letter-spacing:1px;fill:var(--ink);opacity:.65}
+.mp-hand{font-family:var(--hand);font-size:25px;fill:var(--blue)}
+.mp-foot{font-family:var(--mono);font-size:11px;letter-spacing:1px;fill:var(--ink);opacity:.5}
+.mp-line{stroke:var(--ink);stroke-width:1;opacity:.4;transition:stroke .2s,opacity .2s}
+.mp-dot{fill:var(--ink);transition:fill .2s}
+.mapdot{cursor:none}
+.mapdot:hover .mp-dot{fill:var(--blue)}
+.mapdot:hover .mp-line{stroke:var(--blue);opacity:1;stroke-width:1.6}
+.mapdot:hover .mp-lab{fill:var(--blue)}
+/* 3D die */
+.map-wrap{position:relative;max-width:1250px;margin:0 auto}
+.die3d-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);perspective:900px;z-index:3;--die:clamp(72px,11.5vw,148px)}
+.die-cube{width:var(--die);height:var(--die);position:relative;transform-style:preserve-3d;animation:tumble 14s linear infinite}
+@keyframes tumble{from{transform:rotateX(-20deg) rotateY(0deg)}to{transform:rotateX(340deg) rotateY(360deg)}}
+.die-face{position:absolute;inset:0;background:#101012;border:1.5px solid rgba(247,246,242,.22);border-radius:16%;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:13%;box-shadow:inset 0 0 22px rgba(247,246,242,.07)}
+.die-face .pip{background:#f7f6f2;border-radius:50%;width:72%;height:72%;place-self:center}
+.f1{transform:translateZ(calc(var(--die)/2))}
+.f6{transform:rotateY(180deg) translateZ(calc(var(--die)/2))}
+.f3{transform:rotateY(90deg) translateZ(calc(var(--die)/2))}
+.f4{transform:rotateY(-90deg) translateZ(calc(var(--die)/2))}
+.f5{transform:rotateX(90deg) translateZ(calc(var(--die)/2))}
+.f2{transform:rotateX(-90deg) translateZ(calc(var(--die)/2))}
+#dieHit{cursor:none}
+#dieHit.rolling .die-cube{animation:fastroll .65s cubic-bezier(.3,.7,.4,1)}
+@keyframes fastroll{from{transform:rotateX(-20deg) rotateY(0)}to{transform:rotateX(700deg) rotateY(540deg)}}
+@media (prefers-reduced-motion:reduce){.die-cube{animation:none;transform:rotateX(-20deg) rotateY(-30deg)}}
+@media(max-width:700px){.map-sec{padding:40px 2vw 20px}}
+
+/* ---------- sections ---------- */
+section{padding:110px 6vw;position:relative}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:56px}
+.sec-num{font-family:var(--mono);font-size:13px;color:var(--blue);font-weight:600;letter-spacing:1px}
+.sec-title{font-family:var(--mono);font-weight:800;font-size:clamp(30px,4.6vw,54px);letter-spacing:-.03em}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:start}
+.about-big{font-size:clamp(21px,2.6vw,32px);font-weight:300;line-height:1.5}
+.about-big b{font-weight:600}
+.about-big .hl{background:linear-gradient(transparent 62%,var(--blue-soft) 62%);padding:0 2px}
+.about-big .bluetxt{color:var(--blue);font-weight:600}
+.about-side{font-family:var(--mono);font-size:13px;line-height:2.1;opacity:.85}
+.about-side .k{color:var(--blue)}
+.hand-note{font-family:var(--hand);font-size:24px;color:var(--blue);display:inline-block;transform:rotate(-2deg)}
+@media(max-width:860px){.about-grid{grid-template-columns:1fr}}
+
+/* ---------- projects ---------- */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media(max-width:860px){.proj-grid{grid-template-columns:1fr}}
+.proj{
+  border:1.5px solid var(--ink);padding:34px 30px;position:relative;background:var(--paper);
+  transition:background .3s,color .3s,transform .3s,box-shadow .3s;overflow:hidden;
+}
+.proj:hover{background:var(--ink);color:var(--paper);transform:translate(-4px,-4px);box-shadow:6px 6px 0 var(--blue)}
+.proj-num{font-family:var(--mono);font-size:12px;color:var(--blue);letter-spacing:1px;font-weight:600}
+.proj h3{font-family:var(--mono);font-size:21px;font-weight:800;margin:12px 0 4px;letter-spacing:-.02em}
+.proj .proj-sub{font-family:var(--mono);font-size:12.5px;color:var(--blue);margin-bottom:14px;font-weight:500}
+.proj:hover .proj-sub{color:#8b96ff}
+.proj p{font-size:14.5px;line-height:1.65;opacity:.82}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.5px;padding:4px 10px;border:1px solid currentColor;border-radius:99px;opacity:.75;transition:all .2s}
+.proj:hover .tag:hover{background:var(--blue);border-color:var(--blue);color:#fff;opacity:1}
+.proj .corner{position:absolute;top:16px;right:18px;font-family:var(--mono);font-size:16px;opacity:0;transform:translate(-6px,6px);transition:all .3s}
+.proj:hover .corner{opacity:1;transform:none}
+
+/* ---------- experience ---------- */
+.xp-list{border-top:1.5px solid var(--ink)}
+.xp{border-bottom:1.5px solid var(--ink)}
+.xp-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:24px;align-items:baseline;padding:26px 8px;transition:background .2s,padding-left .25s;user-select:none}
+.xp-row:hover{background:var(--blue-soft);padding-left:20px}
+.xp-idx{font-family:var(--mono);font-size:12px;color:var(--blue);font-weight:600}
+.xp-co{font-family:var(--mono);font-weight:800;font-size:clamp(17px,2.4vw,24px);letter-spacing:-.02em}
+.xp-role{font-family:var(--mono);font-size:12.5px;opacity:.6;text-align:right}
+.xp-date{font-family:var(--mono);font-size:12.5px;opacity:.6}
+.xp-plus{font-family:var(--mono);font-size:20px;color:var(--blue);transition:transform .3s}
+.xp.open .xp-plus{transform:rotate(45deg)}
+.xp-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.xp-inner{padding:4px 8px 30px;display:grid;grid-template-columns:1.4fr .6fr;gap:40px}
+.xp-inner p{font-size:14.5px;line-height:1.7;opacity:.85;margin-bottom:10px}
+.xp-tech{font-family:var(--mono);font-size:11.5px;line-height:2;opacity:.7}
+.xp-tech b{color:var(--blue);font-weight:600}
+@media(max-width:860px){.xp-row{grid-template-columns:auto 1fr auto}.xp-role{display:none}.xp-inner{grid-template-columns:1fr}}
+.xp-also{font-family:var(--mono);font-size:12.5px;margin-top:26px;opacity:.6}
+.xp-also b{color:var(--blue)}
+
+/* ---------- research / thoughts ---------- */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+@media(max-width:860px){.res-grid{grid-template-columns:1fr}}
+.paper-card{border:1.5px solid var(--ink);padding:30px;display:block;transition:all .25s;position:relative}
+.paper-card:hover{box-shadow:5px 5px 0 var(--blue);transform:translate(-3px,-3px)}
+.paper-card .pc-label{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--blue);font-weight:600}
+.paper-card h4{font-family:var(--mono);font-size:16.5px;font-weight:800;margin:12px 0 8px;line-height:1.45}
+.paper-card p{font-size:13.5px;opacity:.75;line-height:1.6}
+.paper-card .pc-go{position:absolute;top:24px;right:26px;font-family:var(--mono);font-size:15px;transition:transform .25s}
+.paper-card:hover .pc-go{transform:translate(3px,-3px);color:var(--blue)}
+.notes-list{margin-top:22px;font-family:var(--mono);font-size:13px;line-height:2.4;opacity:.85}
+.notes-list li{list-style:none;padding-left:20px;position:relative}
+.notes-list li::before{content:'->';position:absolute;left:0;color:var(--blue)}
+
+.thought-box{border:1.5px dashed var(--blue);padding:36px 32px;text-align:center;background:var(--blue-soft)}
+.thought-box .tb-label{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--blue);font-weight:600;margin-bottom:20px}
+.thought-txt{font-size:clamp(18px,2.2vw,24px);font-weight:300;line-height:1.5;min-height:3.2em;display:flex;align-items:center;justify-content:center;transition:opacity .25s,transform .25s}
+.thought-txt.swap{opacity:0;transform:translateY(8px)}
+.thought-btn{margin-top:22px;font-family:var(--mono);font-size:12.5px;font-weight:600;padding:11px 22px;background:var(--blue);color:#fff;border:none;letter-spacing:.5px;transition:transform .15s,box-shadow .15s}
+.thought-btn:hover{transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--ink)}
+.thought-btn:active{transform:scale(.95)}
+.thought-count{font-family:var(--hand);font-size:20px;color:var(--blue);margin-top:14px;opacity:.8}
+
+/* ---------- awards ---------- */
+.awards{display:flex;flex-wrap:wrap;gap:12px}
+.award{
+  font-family:var(--mono);font-size:12.5px;font-weight:500;letter-spacing:.3px;
+  padding:11px 18px;border:1.5px solid var(--ink);border-radius:99px;
+  display:inline-flex;gap:8px;align-items:center;background:var(--paper);
+  transition:all .2s;user-select:none;
+}
+.award:hover{background:var(--blue);border-color:var(--blue);color:#fff;transform:rotate(-2deg) scale(1.05)}
+.award:nth-child(even):hover{transform:rotate(2deg) scale(1.05)}
+
+/* ---------- dance ---------- */
+.dance{background:var(--ink);color:var(--paper)}
+.dance .sec-title{color:var(--paper)}
+.dance-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+@media(max-width:860px){.dance-grid{grid-template-columns:1fr}}
+.dance-quote{font-size:clamp(20px,2.6vw,30px);font-weight:300;line-height:1.55}
+.dance-quote em{color:var(--blue);font-style:normal;font-weight:600}
+.dance-less{font-size:15px;line-height:1.75;opacity:.85;margin-top:26px;font-weight:300}
+.dance-cred{font-family:var(--mono);font-size:13px;line-height:2.3;opacity:.8;margin-top:34px}
+.dance-cred .k{color:#8b96ff}
+.dance-visual{text-align:center;position:relative}
+.dance-figure{font-size:110px;display:inline-block;user-select:none;transition:transform .2s}
+.dance-figure:hover{transform:scale(1.15) rotate(-8deg)}
+.dance-hint{font-family:var(--hand);font-size:24px;color:#8b96ff;margin-top:18px;transform:rotate(-3deg)}
+body.dancemode .dance-figure,body.dancemode .mkt,body.dancemode .logo{animation:boogie .5s ease-in-out infinite}
+body.dancemode .hero h1 span.ch{animation:boogie .5s ease-in-out infinite}
+body.dancemode .hero h1 span.ch:nth-child(odd){animation-delay:.25s}
+@keyframes boogie{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-10px) rotate(6deg)}}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding-bottom:140px}
+.contact-big{font-family:var(--mono);font-weight:800;font-size:clamp(30px,6vw,72px);letter-spacing:-.03em;line-height:1.1}
+.contact-big .wave{display:inline-block}
+.contact-big:hover .wave{animation:wave .6s ease-in-out 2}
+@keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(18deg)}75%{transform:rotate(-12deg)}}
+.contact-sub{margin:26px auto 40px;max-width:520px;font-size:15.5px;opacity:.75;line-height:1.7}
+.contact-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- footer ---------- */
+footer{border-top:1.5px solid var(--ink);padding:22px 6vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:11.5px;opacity:.65}
+footer .blue{color:var(--blue)}
+
+/* ---------- toast ---------- */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translate(-50%,120px);z-index:10001;
+  background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:13px;
+  padding:14px 24px;border:1.5px solid var(--blue);box-shadow:4px 4px 0 var(--blue);
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1);max-width:88vw;text-align:center;
+}
+.toast.show{transform:translate(-50%,0)}
+
+/* ---------- command palette ---------- */
+.palette{position:fixed;inset:0;background:rgba(16,16,18,.5);backdrop-filter:blur(5px);z-index:10002;display:none;align-items:flex-start;justify-content:center;padding-top:16vh}
+.palette.open{display:flex}
+.pal-box{width:min(580px,92vw);background:var(--paper);border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--blue);animation:palin .2s cubic-bezier(.34,1.4,.64,1)}
+@keyframes palin{from{transform:translateY(14px);opacity:0}}
+.pal-box input{width:100%;border:none;outline:none;background:transparent;font-family:var(--mono);font-size:16px;padding:18px 20px;border-bottom:1.5px solid var(--ink);color:var(--ink)}
+.pal-list{max-height:46vh;overflow-y:auto}
+.pal-item{font-family:var(--mono);font-size:13px;padding:12px 20px;display:flex;justify-content:space-between;gap:20px;user-select:none}
+.pal-item.sel{background:var(--blue);color:#fff}
+.pal-item .desc{opacity:.55}
+.pal-hint{font-family:var(--mono);font-size:10.5px;padding:10px 20px;opacity:.45;border-top:1px solid rgba(16,16,18,.15)}
+
+/* ---------- sparkle ---------- */
+.spark{position:fixed;pointer-events:none;z-index:10000;font-size:16px;animation:sparkfly .7s ease-out forwards}
+@keyframes sparkfly{to{transform:translate(var(--dx),var(--dy)) scale(0) rotate(180deg);opacity:0}}
+
+/* ---------- bunny rain ---------- */
+.bunny{position:fixed;top:-60px;pointer-events:none;z-index:9996;font-size:30px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+<div class="progress" id="progress"></div>
+<div class="toast" id="toast"></div>
+<div class="palette" id="palette">
+  <div class="pal-box">
+    <input id="palInput" type="text" placeholder="type a command… (try: roll, food, dance)" autocomplete="off">
+    <div class="pal-list" id="palList"></div>
+    <div class="pal-hint">↑↓ navigate · enter run · esc close</div>
+  </div>
+</div>
+
+<header>
+  <div class="logo" id="logo">BZ_©2026</div>
+  <nav>
+    <a href="#projects">projects</a>
+    <a href="#experience">experience</a>
+    <a href="#research">research</a>
+    <a href="#dance">dance</a>
+    <a href="#contact">contact</a>
+  </nav>
+  <div class="clock" id="clock">NYC --:--:--</div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">/// PORTFOLIO_v1.0 · NEW YORK CITY</div>
+  <h1 id="heroname">
+    <span class="ln" data-txt="BARBIE"></span>
+    <span class="ln" data-txt="ZHU_"></span>
+  </h1>
+  <div class="hero-sub">
+    <span class="static">$ whoami &nbsp;→</span>
+    <span class="type" id="typewriter"></span>
+  </div>
+  <div class="hero-btns">
+    <a class="btn solid" id="resumeBtn" href="#" >RESUME ↓</a>
+    <a class="btn" href="https://github.com/bbbarbie" target="_blank" rel="noopener">GITHUB ↗</a>
+    <a class="btn" href="https://www.linkedin.com/in/barbiehezhu/" target="_blank" rel="noopener">LINKEDIN ↗</a>
+    <a class="btn" href="#projects">PROJECTS ↓</a>
+    <a class="btn" href="#contact">CONTACT ↓</a>
+  </div>
+  <div class="mkt" id="mkt" title="a live market on you">
+    <div class="mkt-h">PREDICTION MARKET #001</div>
+    <div class="mkt-q">"visitor scrolls to the end of this site"</div>
+    <div class="mkt-row">
+      <span class="mkt-yes">YES <b id="mktYes">15¢</b></span>
+      <span class="mkt-no">NO <b id="mktNo">85¢</b></span>
+    </div>
+    <div class="mkt-bar"><div class="mkt-fill" id="mktFill"></div></div>
+    <div class="mkt-f" id="mktStatus">market open · prices move as you scroll</div>
+  </div>
+  <div class="scroll-hint">SCROLL ↓ · PRESS ⌘K FOR COMMANDS</div>
+</section>
+
+<!-- POSTER MAP / INDEX -->
+<section class="map-sec" id="map">
+<div class="map-wrap">
+<svg viewBox="0 0 1150 800" xmlns="http://www.w3.org/2000/svg" role="navigation" aria-label="site index map">
+  <defs>
+    <filter id="speck" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="2" seed="7" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 14 -6"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- headline -->
+  <text x="30" y="96" class="mp-head">STAND OUT</text>
+  <text x="30" y="168" class="mp-head">FROM THE NOISE</text>
+  <text x="34" y="212" class="mp-note">(index)*</text>
+  <circle cx="1120" cy="44" r="7" fill="#101012"/>
+  <text x="1104" y="52" text-anchor="end" class="mp-mini">EST. 2026 / NYC</text>
+
+  <!-- orbit ring -->
+  <circle cx="575" cy="400" r="230" fill="none" stroke="#101012" stroke-width="1" stroke-dasharray="1 7" opacity=".35" stroke-linecap="round"/>
+
+  <!-- nav dots on ring, short leader lines only -->
+  <a href="#projects" class="mapdot">
+    <circle cx="367" cy="303" r="6" class="mp-dot"/>
+    <line x1="357" y1="303" x2="322" y2="303" class="mp-line"/>
+    <text x="314" y="308" text-anchor="end" class="mp-lab">PROJECTS</text>
+  </a>
+  <a href="#about" class="mapdot">
+    <circle cx="345" cy="400" r="6" class="mp-dot"/>
+    <line x1="335" y1="400" x2="300" y2="400" class="mp-line"/>
+    <text x="292" y="405" text-anchor="end" class="mp-lab">ABOUT</text>
+  </a>
+  <a href="#dance" class="mapdot">
+    <circle cx="367" cy="497" r="6" class="mp-dot"/>
+    <line x1="357" y1="497" x2="322" y2="497" class="mp-line"/>
+    <text x="314" y="502" text-anchor="end" class="mp-lab">DANCE</text>
+  </a>
+  <a href="#experience" class="mapdot">
+    <circle cx="763" cy="268" r="6" class="mp-dot"/>
+    <line x1="773" y1="268" x2="808" y2="268" class="mp-line"/>
+    <text x="816" y="273" class="mp-lab">EXPERIENCE</text>
+  </a>
+  <a href="#research" class="mapdot">
+    <circle cx="805" cy="400" r="6" class="mp-dot"/>
+    <line x1="815" y1="400" x2="850" y2="400" class="mp-line"/>
+    <text x="858" y="405" class="mp-lab">RESEARCH</text>
+  </a>
+  <a href="#contact" class="mapdot">
+    <circle cx="763" cy="532" r="6" class="mp-dot"/>
+    <line x1="773" y1="532" x2="808" y2="532" class="mp-line"/>
+    <text x="816" y="537" class="mp-lab">CONTACT</text>
+  </a>
+
+  <!-- poker chip -->
+  <g transform="translate(706,508)">
+    <circle r="36" fill="#101012"/>
+    <circle r="36" fill="#fff" filter="url(#speck)" opacity=".45"/>
+    <circle r="22" fill="none" stroke="#f7f6f2" stroke-width="2.5" stroke-dasharray="6 5"/>
+    <circle r="7" fill="#f7f6f2"/>
+  </g>
+  <text x="790" y="618" class="mp-hand" transform="rotate(-5 790 618)">click the die, let chance navigate</text>
+  <text x="575" y="678" text-anchor="middle" class="mp-cap">unpredictable in → predictable out*</text>
+
+  <!-- manifesto -->
+  <text x="30" y="668" class="mp-mini">FIND THE SIGNAL IN THE NOISE.</text>
+  <text x="30" y="692" class="mp-mini">DEFY ALL RANDOMNESS;</text>
+  <text x="30" y="716" class="mp-mini">BORROW NO EDGE FROM OTHERS,</text>
+  <text x="30" y="740" class="mp-mini">BE YOUR OWN DISTRIBUTION.</text>
+  <text x="30" y="778" class="mp-foot">*results not guaranteed. edge handmade in nyc.</text>
+</svg>
+<div class="die3d-wrap" id="dieHit" role="button" aria-label="roll the die, go to a random section" title="roll me">
+  <div class="die-cube">
+    <div class="die-face f1"><span class="pip" style="grid-area:2/2"></span></div>
+    <div class="die-face f2"><span class="pip" style="grid-area:1/1"></span><span class="pip" style="grid-area:3/3"></span></div>
+    <div class="die-face f3"><span class="pip" style="grid-area:1/1"></span><span class="pip" style="grid-area:2/2"></span><span class="pip" style="grid-area:3/3"></span></div>
+    <div class="die-face f4"><span class="pip" style="grid-area:1/1"></span><span class="pip" style="grid-area:1/3"></span><span class="pip" style="grid-area:3/1"></span><span class="pip" style="grid-area:3/3"></span></div>
+    <div class="die-face f5"><span class="pip" style="grid-area:1/1"></span><span class="pip" style="grid-area:1/3"></span><span class="pip" style="grid-area:2/2"></span><span class="pip" style="grid-area:3/1"></span><span class="pip" style="grid-area:3/3"></span></div>
+    <div class="die-face f6"><span class="pip" style="grid-area:1/1"></span><span class="pip" style="grid-area:2/1"></span><span class="pip" style="grid-area:3/1"></span><span class="pip" style="grid-area:1/3"></span><span class="pip" style="grid-area:2/3"></span><span class="pip" style="grid-area:3/3"></span></div>
+  </div>
+</div>
+</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="marquee-track" id="marqueeTrack"></div></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-head reveal"><span class="sec-num">[00]</span><h2 class="sec-title">ABOUT</h2></div>
+  <div class="about-grid">
+    <div class="about-big reveal">
+      <p>Hi, I'm <b>Barbie</b>.</p>
+      <p style="margin-top:22px">Markets. Beats. People. I like finding the <span class="hl">pattern underneath</span> things that look random at first.</p>
+      <p style="margin-top:22px">CS at Columbia. My favorite part of any project is the figuring-out: why people behave a certain way, why something has value, why the data looks <span class="bluetxt">cursed</span>, how a vague thought becomes something that actually runs.</p>
+      <p style="margin-top:22px">Lately that has looked like plasma turbulence research, market simulators, and side projects about pricing and uncertainty.</p>
+      <p style="margin-top:22px">I want work that is hard enough to stay interesting, creative enough to not feel robotic, and real enough that someone besides me uses it.</p>
+      <p style="margin-top:22px">Off the clock: <span class="hand-note">dance, ski, poker, piano ↓</span></p>
+    </div>
+    <div class="about-side reveal">
+      <div><span class="k">location:</span> new york city</div>
+      <div><span class="k">school:</span> columbia university, cs</div>
+      <div>&nbsp;&nbsp;minor in applied math + operations research</div>
+      <div><span class="k">into:</span> AI, markets, scientific computing</div>
+      <div><span class="k">learning:</span> japanese · prediction markets</div>
+      <div><span class="k">also:</span> dance · ski · poker · piano · cafes</div>
+      <div><span class="k">superpower:</span> i know the actual good</div>
+      <div>&nbsp;&nbsp;food spots in nyc <span style="color:var(--blue)">(press F ·</span> <a href="https://beliapp.co/app/bbbarbie" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline">beli ↗</a><span style="color:var(--blue)">)</span></div>
+      <div><span class="k">stack:</span> python / c++ / java / jax / sql</div>
+      <div><span class="k">status:</span> <span id="statusBlink">open to interesting problems_</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-head reveal"><span class="sec-num">[01]</span><h2 class="sec-title">PROJECTS</h2></div>
+  <div class="proj-grid">
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[001]</div>
+      <h3>EventEdge</h3>
+      <div class="proj-sub">Calibration Error &amp; Adverse Selection in Event-Contract Market Making</div>
+      <p>C++ + Python simulator for binary event-contract markets. Models how market maker calibration error interacts with informed order flow, inventory risk, spread-setting, and P&amp;L.</p>
+      <div class="tags"><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Market Making</span><span class="tag">Simulation</span><span class="tag">Quant Trading</span></div>
+    </div>
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[002]</div>
+      <h3>JAX-MHW Turbulence</h3>
+      <div class="proj-sub">Automatic Differentiation for Chaotic Plasma Turbulence</div>
+      <p>Research project studying long-time sensitivity estimation in modified Hasegawa–Wakatani plasma turbulence using JAX, finite differences, and AD, including where AD quietly fails.</p>
+      <div class="tags"><span class="tag">JAX</span><span class="tag">Scientific Computing</span><span class="tag">Autodiff</span><span class="tag">Plasma Physics</span></div>
+    </div>
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[003] · personal favorite</div>
+      <h3>BeatMatch</h3>
+      <div class="proj-sub">AI Dance Coach (Because I Teach Dance But Can't Count Beats)</div>
+      <p>6+ years as a dance instructor. Still can't count beats. I feel the music instead, which is a problem when students need "5, 6, 7, 8." So I built the coach I needed: it hears the beat (Web Audio BPM detection), watches the body (33 keypoints via MoveNet/MediaPipe), scores every move against a ±150 ms beat window, and has Claude write the coaching report. It listens <b>and</b> watches.</p>
+      <div class="tags"><span class="tag">JavaScript</span><span class="tag">Web Audio API</span><span class="tag">MoveNet</span><span class="tag">Real-time CV</span><span class="tag">Claude API</span></div>
+    </div>
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[004] · 2nd place 🥈</div>
+      <h3>Investment Analytics Platform</h3>
+      <div class="proj-sub">Goldman Sachs Emerging Leaders Engineering Challenge</div>
+      <p>Built the backend finance engine: live CAPM projections wired to real data (FRED risk-free rate, Yahoo market return, Newton betas), continuous compounding, Monte Carlo with GBM across 1,000+ scenarios, and an AI portfolio optimizer. Proudest part: provider fallbacks and cached last-known-good values, so the model degrades gracefully instead of breaking.</p>
+      <div class="tags"><span class="tag">Spring Boot</span><span class="tag">React</span><span class="tag">CAPM</span><span class="tag">Monte Carlo</span><span class="tag">FRED / Yahoo</span></div>
+    </div>
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[005] · 4th place ♟</div>
+      <h3>Grandmaster Council</h3>
+      <div class="proj-sub">Multi-Agent Chess Engine · Cubist (Point72) Hackathon</div>
+      <p>A chess engine that argues with itself: five LLM personas (tactician, positional coach, risk manager, gambler, endgame specialist) debate each move over weighted features like material, king safety, mobility, and attack pressure. Decompose a hard decision into factors, score the tradeoffs, explain the answer.</p>
+      <div class="tags"><span class="tag">Next.js</span><span class="tag">LLM Agents</span><span class="tag">Heuristics</span><span class="tag">Chess</span></div>
+    </div>
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[006]</div>
+      <h3>Humor Lab</h3>
+      <div class="proj-sub">An LLM Eval Pipeline, But For Jokes</div>
+      <p>Define a "humor flavor" (e.g. <i>overcaffeinated ivy league chaos</i>), generate captions, collect swipe ratings, read the analytics, tune the prompt chain, repeat. Multi-app platform with Supabase-backed CRUD, admin dashboards, auth, and safe-delete logic. A measurable experimentation loop for something famously unmeasurable.</p>
+      <div class="tags"><span class="tag">Vercel</span><span class="tag">Supabase</span><span class="tag">Prompt Engineering</span><span class="tag">LLM Eval</span></div>
+    </div>
+    <div class="proj reveal">
+      <div class="corner">↗</div>
+      <div class="proj-num">[007]</div>
+      <h3>Alternative Market Research</h3>
+      <div class="proj-sub">Consumer Alternative Asset Markets</div>
+      <p>Research &amp; backtesting on tickets, trading cards, sneakers, luxury goods, and event-driven resale markets: pricing, liquidity, scarcity, and sentiment shocks. Unpredictable markets are just under-modeled ones.</p>
+      <div class="tags"><span class="tag">Markets</span><span class="tag">Backtesting</span><span class="tag">Alt Data</span><span class="tag">Pricing</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-head reveal"><span class="sec-num">[02]</span><h2 class="sec-title">EXPERIENCE</h2></div>
+  <div class="xp-list reveal">
+
+    <div class="xp">
+      <div class="xp-row" data-xp>
+        <span class="xp-idx">01</span>
+        <span class="xp-co">Columbia Fusion / JAX Research</span>
+        <span class="xp-role">Undergraduate Researcher</span>
+        <span class="xp-date">2026 → now</span>
+        <span class="xp-plus">+</span>
+      </div>
+      <div class="xp-body"><div class="xp-inner">
+        <div>
+          <p>Scientific ML + plasma simulation. Started with long-time sensitivity estimation in modified Hasegawa–Wakatani turbulence, and found that direct AD can produce unstable gradients for chaotic long-time averages.</p>
+          <p>Now building differentiable edge plasma transport tools in JAX: making old scientific codes flexible, differentiable, and useful for engineering design. Chaotic system → usable gradients. On brand.</p>
+        </div>
+        <div class="xp-tech"><b>tech:</b><br>JAX · NumPy · PDE simulation · numerical methods · HPC</div>
+      </div></div>
+    </div>
+
+    <div class="xp">
+      <div class="xp-row" data-xp>
+        <span class="xp-idx">02</span>
+        <span class="xp-co">Kernel</span>
+        <span class="xp-role">ML / Data Systems Intern · NYC</span>
+        <span class="xp-date">2026 → now</span>
+        <span class="xp-plus">+</span>
+      </div>
+      <div class="xp-body"><div class="xp-inner">
+        <div>
+          <p>Startup doing identity resolution over messy real-world records. I build backend systems that detect when one person's data is quietly split across locations, affiliations, CRM accounts, and activity streams. Entity resolution at its most chaotic.</p>
+          <p>Built case-file retrieval services that pull evidence across sources, plus conflict-detection logic separating deterministic evidence from LLM explanation, so the system shows <b>why</b> a conflict exists, not just that it does.</p>
+        </div>
+        <div class="xp-tech"><b>tech:</b><br>Python · FastAPI · SQLAlchemy · pytest · LLM eval · data pipelines</div>
+      </div></div>
+    </div>
+
+    <div class="xp">
+      <div class="xp-row" data-xp>
+        <span class="xp-idx">03</span>
+        <span class="xp-co">UCLA Micro &amp; Nano Mfg Lab</span>
+        <span class="xp-role">Research Intern · LA</span>
+        <span class="xp-date">2023</span>
+        <span class="xp-plus">+</span>
+      </div>
+      <div class="xp-body"><div class="xp-inner">
+        <div>
+          <p>Software for electrowetting-on-dielectric digital microfluidics: droplets controlled by voltage signals on a chip. Built React/React Native interfaces for real-time droplet visualization and control, voltage monitoring, and safety alerts.</p>
+          <p>First lesson in hardware-adjacent software: a bug isn't a UI problem when it can break an experiment.</p>
+        </div>
+        <div class="xp-tech"><b>tech:</b><br>React · React Native · MATLAB · hardware interfaces</div>
+      </div></div>
+    </div>
+
+    <div class="xp">
+      <div class="xp-row" data-xp>
+        <span class="xp-idx">04</span>
+        <span class="xp-co">Daplink</span>
+        <span class="xp-role">Engineering Intern &amp; PM · NYC</span>
+        <span class="xp-date">2025</span>
+        <span class="xp-plus">+</span>
+      </div>
+      <div class="xp-body"><div class="xp-inner">
+        <div>
+          <p>AI-driven private-market valuation platform for dental practices. Built SQL + Retool dashboards ingesting and normalizing financial records for 100+ practices, plus ML-driven valuation logic.</p>
+          <p>Learned that "pricing" is never just math. It's data quality, assumptions, edge cases, and how clearly the system explains itself.</p>
+        </div>
+        <div class="xp-tech"><b>tech:</b><br>SQL · Retool · Python · valuation modeling · product</div>
+      </div></div>
+    </div>
+
+    <div class="xp">
+      <div class="xp-row" data-xp>
+        <span class="xp-idx">05</span>
+        <span class="xp-co">Cal Poly Pomona CS Research</span>
+        <span class="xp-role">Researcher / Co-Author</span>
+        <span class="xp-date">2022 → 23</span>
+        <span class="xp-plus">+</span>
+      </div>
+      <div class="xp-body"><div class="xp-inner">
+        <div>
+          <p>ML research on autism spectrum disorder screening data (1,985 cases, 28 variables). Co-authored an IJFCC publication using correlation, chi-square, mutual information, and Random Forest feature importance.</p>
+          <p>The project that got me into models for <b>interpretation</b>, not just prediction.</p>
+        </div>
+        <div class="xp-tech"><b>tech:</b><br>Python · pandas · scikit-learn · Random Forest · statistics</div>
+      </div></div>
+    </div>
+
+  </div>
+  <div class="xp-also reveal">+ also: <b>Learn Detect</b> (engineering intern) · <b>That Dragonfly</b> (SWE intern)</div>
+</section>
+
+<!-- RESEARCH / THOUGHTS -->
+<section id="research">
+  <div class="sec-head reveal"><span class="sec-num">[03]</span><h2 class="sec-title">RESEARCH_&amp;_WRITING</h2></div>
+  <div class="res-grid">
+    <div class="reveal">
+      <a class="paper-card" href="https://www.ijfcc.org/vol12/IJFCC-V12N4-609.pdf" target="_blank" rel="noopener">
+        <span class="pc-go">↗</span>
+        <div class="pc-label">PUBLISHED PAPER · IJFCC, VOL 12, NO 4</div>
+        <h4>Using Feature Selection Techniques to Investigate the Myth of Autism Spectrum Disorder</h4>
+        <p>Feature selection + Random Forest analysis of a children's ASD screening dataset. Which variables actually matter, and how do you explain that clearly?</p>
+      </a>
+      <ul class="notes-list">
+        <li><b style="color:var(--blue)">active:</b> differentiable edge plasma transport in JAX: teaching a chaotic PDE to hand out gradients <span style="opacity:.5">(writeup soon)</span></li>
+        <li>quant project writeups <span style="opacity:.5">(coming soon)</span></li>
+        <li>project memos <span style="opacity:.5">(in the oven)</span></li>
+      </ul>
+    </div>
+    <div class="thought-box reveal">
+      <div class="tb-label">THINGS I'M THINKING ABOUT · RANDOMIZED</div>
+      <div class="thought-txt" id="thoughtTxt">market making under imperfect information</div>
+      <button class="thought-btn" id="thoughtBtn">GIVE ME ANOTHER THOUGHT ⟳</button>
+      <div class="thought-count" id="thoughtCount"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="sec-head reveal"><span class="sec-num">[04]</span><h2 class="sec-title">HIGHLIGHTS</h2></div>
+  <div class="awards reveal">
+    <span class="award">🥈 2nd @ Goldman Sachs Emerging Leaders Challenge</span>
+    <span class="award">♟ 4th @ Cubist / Point72 Hackathon</span>
+    <span class="award">🚀 YC Startup School 2026</span>
+    <span class="award">🛰 NASA Space Apps award</span>
+    <span class="award">📄 Published IJFCC paper</span>
+    <span class="award">✏️ SAT 1580</span>
+    <span class="award">🏟 Backup dancer @ Crypto.com Arena</span>
+    <span class="award">💃 Founder, Barbie Dance · 400+ kids taught</span>
+  </div>
+</section>
+
+<!-- DANCE -->
+<section class="dance" id="dance">
+  <div class="sec-head reveal"><span class="sec-num" style="color:#8b96ff">[05]</span><h2 class="sec-title">ALSO,_I_DANCE</h2></div>
+  <div class="dance-grid">
+    <div class="reveal">
+      <p class="dance-quote">Dance is the other way I understand systems: <em>timing, coordination, pressure, rhythm</em>. People moving together without everything being said out loud.</p>
+      <p class="dance-less">Six-plus years of teaching taught me the transferable stuff: how to run a team, how to correct someone's mistake without flattening them, and that practice only counts when every rep is deliberate. Effort without intention is just cardio. Confession: I still can't count beats; I feel them. Eventually that became an engineering problem, see <a href="#projects" style="color:#8b96ff;text-decoration:underline">[003] BeatMatch</a>.</p>
+      <div class="dance-cred">
+        <div><span class="k">></span> Dance instructor, 6+ years · ballet, jazz funk, choreography</div>
+        <div><span class="k">></span> Founder · Barbie Dance · free dance education · 400+ kids taught · 20+ volunteer teachers</div>
+        <div><span class="k">></span> Backup dancer · ZEROBASEONE @ Crypto.com Arena</div>
+        <div><span class="k">></span> E-Board · Columbia China Dance</div>
+        <div><span class="k">></span> Team captain · Jin's Dance Studio</div>
+        <div><span class="k">></span> Jazz funk instructor · dance studio, Los Angeles</div>
+        <div><span class="k">></span> Ballet · Chinese dance · jazz funk · hip-hop · choreography</div>
+      </div>
+      <div class="dance-cred" style="margin-top:22px">
+        <div style="color:#8b96ff;letter-spacing:2px;font-size:11px">COMPETITION //</div>
+        <div><span class="k">></span> KAR · Elite Miss Dance · Top First Place</div>
+        <div><span class="k">></span> HDE All Stars · Elite Solo · invited to elite bootcamp, Paris</div>
+        <div><span class="k">></span> Showstopper Finals (LA) · Double Platinum · 1st Overall</div>
+      </div>
+    </div>
+    <div class="dance-visual reveal">
+      <div class="dance-figure" id="danceFigure">🕺</div>
+      <div class="dance-hint">press "D" anywhere on this site…</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <div class="contact-big">SAY_HI <span class="wave">👋</span></div>
+    <p class="contact-sub">Always happy to connect about quant trading, AI engineering, scientific computing, weird markets, or dance.</p>
+    <div class="contact-btns">
+      <a class="btn solid" href="mailto:hz3018@columbia.edu">EMAIL ✉</a>
+      <a class="btn" href="https://www.linkedin.com/in/barbiehezhu/" target="_blank" rel="noopener">LINKEDIN ↗</a>
+      <a class="btn" href="https://github.com/bbbarbie" target="_blank" rel="noopener">GITHUB ↗</a>
+      <a class="btn" href="#" id="resumeBtn2">RESUME ↓</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 BARBIE ZHU · built with <span class="blue">⌘</span> + late nights</span>
+  <span>you are visitor <span class="blue" id="visitor">#004,721</span> (probably)</span>
+  <span>⌘K opens the command palette</span>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touch=window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+/* ---------- split hero name into hoverable chars ---------- */
+$$('#heroname .ln').forEach(ln=>{
+  ln.textContent='';
+  [...ln.dataset.txt].forEach(c=>{
+    const s=document.createElement('span');
+    s.className='ch'; s.textContent=c;
+    ln.appendChild(s);
+  });
+});
+
+/* ---------- custom cursor ---------- */
+if(!touch){
+  const dot=$('.cursor'), ring=$('.cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  $$('a,button,.xp-row,.award,.mkt,.proj,#logo,.dance-figure,#dieHit').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+  });
+}
+
+/* ---------- click sparkles ---------- */
+addEventListener('click',e=>{
+  if(reduced)return;
+  const glyphs=['✦','✧','✩','+','∗'];
+  for(let i=0;i<6;i++){
+    const s=document.createElement('span');
+    s.className='spark';s.textContent=glyphs[Math.random()*glyphs.length|0];
+    s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';
+    s.style.color=Math.random()>.4?'#2433ff':'#101012';
+    s.style.setProperty('--dx',(Math.random()*90-45)+'px');
+    s.style.setProperty('--dy',(Math.random()*90-45)+'px');
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),750);
+  }
+});
+
+/* ---------- scroll progress + reveal ---------- */
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=h.scrollTop/(h.scrollHeight-h.clientHeight);
+  $('#progress').style.width=(p*100)+'%';
+  updateMarket(p);
+},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}
+}),{threshold:.12});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- NYC clock ---------- */
+setInterval(()=>{
+  $('#clock').textContent='NYC '+new Date().toLocaleTimeString('en-US',
+    {timeZone:'America/New_York',hour12:false});
+},1000);
+
+/* ---------- typewriter ---------- */
+const roles=['engineer','pattern finder','dance instructor (6+ yrs)','quant-curious',
+  'plasma turbulence researcher','poker player (positive EV, mostly)','skier','pianist',
+  'japanese learner','nyc food-spot database','JAX enjoyer','professionally curious about people'];
+const tw=$('#typewriter');let ri=0,ci=0,del=false;
+(function type(){
+  const w=roles[ri];
+  tw.textContent=w.slice(0,ci);
+  if(!del&&ci<w.length){ci++;setTimeout(type,70);}
+  else if(!del){del=true;setTimeout(type,1600);}
+  else if(ci>0){ci--;setTimeout(type,35);}
+  else{del=false;ri=(ri+1)%roles.length;setTimeout(type,300);}
+})();
+
+/* ---------- marquee ---------- */
+const items=['PREDICTION MARKETS','MARKET MICROSTRUCTURE','PLASMA TURBULENCE','POKER','DANCE',
+  'JAX','HUMAN BEHAVIOR','C++','WEIRD MARKETS','SKI SZN','NYC FOOD MAP','DIFFERENTIABLE EVERYTHING'];
+$('#marqueeTrack').innerHTML=(items.map(t=>`<span>${t}</span><span class="dot">✦</span>`).join('')).repeat(2);
+
+/* ---------- live prediction market on the visitor ---------- */
+let mktResolved=false;
+function updateMarket(p){
+  const yes=Math.min(99,Math.round(15+84*p));
+  $('#mktYes').textContent=yes+'¢';
+  $('#mktNo').textContent=(100-yes)+'¢';
+  $('#mktFill').style.width=yes+'%';
+  if(p>0.985&&!mktResolved){
+    mktResolved=true;
+    $('#mktStatus').textContent='RESOLVED: YES ✓';
+    $('#mktStatus').style.color='var(--blue)';
+    $('#mktStatus').style.opacity='1';
+    toast('📈 market #001 resolved YES. you made it to the end.');
+  }
+}
+
+/* ---------- experience accordion ---------- */
+$$('[data-xp]').forEach(row=>{
+  row.addEventListener('click',()=>{
+    const xp=row.parentElement,body=xp.querySelector('.xp-body'),open=xp.classList.contains('open');
+    $$('.xp.open').forEach(o=>{o.classList.remove('open');o.querySelector('.xp-body').style.maxHeight='0';});
+    if(!open){xp.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';}
+  });
+});
+
+/* ---------- thought dispenser ---------- */
+const thoughts=[
+  'market making under imperfect information',
+  'what prediction markets actually know',
+  'why fragmented consumer markets are secretly interesting',
+  'when automatic differentiation fails in chaotic systems',
+  'poker is just tuition for self-knowledge',
+  'why dancers might make underrated engineers',
+  'pricing is a data-quality problem wearing a math costume',
+  'the best cafes in nyc are never on the lists',
+  "you can be on beat without counting beats. ask me how.",
+  'evidence > vibes, in models and in life',
+];
+let ti=0,dispensed=1;
+$('#thoughtBtn').addEventListener('click',()=>{
+  const t=$('#thoughtTxt');
+  t.classList.add('swap');
+  setTimeout(()=>{
+    ti=(ti+1+Math.floor(Math.random()*(thoughts.length-1)))%thoughts.length;
+    t.textContent=thoughts[ti];t.classList.remove('swap');
+    dispensed++;
+    $('#thoughtCount').textContent=dispensed>3?`(${dispensed} thoughts dispensed. i have many.)`:'';
+  },250);
+});
+
+/* ---------- toast ---------- */
+let toastTimer;
+function toast(msg){
+  const t=$('#toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600);
+}
+['resumeBtn','resumeBtn2'].forEach(id=>{
+  const b=document.getElementById(id);
+  if(b)b.addEventListener('click',e=>{e.preventDefault();
+    toast('résumé.pdf loading… (just email me, it\'s faster ✉)');});
+});
+
+/* ---------- dance mode (press D) ---------- */
+let dancing=false,discoInt;
+function danceMode(){
+  dancing=!dancing;
+  document.body.classList.toggle('dancemode',dancing);
+  if(dancing){
+    toast('💃 DANCE MODE ON (press D to stop)');
+    let hue=230;
+    discoInt=setInterval(()=>{
+      hue=(hue+40)%360;
+      document.documentElement.style.setProperty('--blue',`hsl(${hue} 100% 55%)`);
+    },500);
+  }else{
+    clearInterval(discoInt);
+    document.documentElement.style.setProperty('--blue','#2433ff');
+    toast('dance mode off. back to work.');
+  }
+}
+addEventListener('keydown',e=>{
+  const typing=/input|textarea/i.test(document.activeElement.tagName);
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){
+    e.preventDefault();pal.classList.contains('open')?closePal():openPal();return;
+  }
+  if(typing)return;
+  const k=e.key.toLowerCase();
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  if(k==='d')danceMode();
+  else if(k==='f')foodRec();
+  else if(k==='r')rollDie();
+  else if(e.key==='/'){e.preventDefault();openPal();}
+});
+$('#danceFigure').addEventListener('click',danceMode);
+
+/* ---------- bunny rain ---------- */
+function bunnyRain(){
+  toast('🐰 BUNNY RAIN');
+  const drops=['🐰','💙','✦','🎀','⭐'];
+  for(let i=0;i<28;i++){
+    setTimeout(()=>{
+      const b=document.createElement('div');b.className='bunny';
+      b.textContent=drops[Math.random()*drops.length|0];
+      b.style.left=Math.random()*100+'vw';
+      b.style.animationDuration=(2.5+Math.random()*2.5)+'s';
+      b.style.fontSize=(20+Math.random()*22)+'px';
+      document.body.appendChild(b);setTimeout(()=>b.remove(),5500);
+    },i*90);
+  }
+}
+let clicks=0;
+$('#logo').addEventListener('click',()=>{
+  clicks++;
+  if(clicks===3)toast('keep clicking…');
+  if(clicks>=5){clicks=0;bunnyRain();}
+});
+
+/* ---------- die roll: let chance navigate ---------- */
+const secs=['about','projects','experience','research','dance','contact'];
+function go(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+function rollDie(){
+  const hit=$('#dieHit');
+  if(hit){hit.classList.add('rolling');setTimeout(()=>hit.classList.remove('rolling'),700);}
+  const i=Math.random()*secs.length|0;
+  setTimeout(()=>{toast('🎲 rolled a '+(i+1)+' → '+secs[i]);go(secs[i]);},600);
+}
+if($('#dieHit'))$('#dieHit').addEventListener('click',rollDie);
+
+/* ---------- nyc food recs (press F) ---------- */
+const foodSpots=[
+  'sake no hana · sushi, but make it fusion',
+  'maku a mano · the best ceviche in new york. not up for debate.',
+  'mountain house · spicy chinese done right',
+  'tosokchon · korean comfort food for late nights',
+  'bangkok supper club · thai. order the shrimp toast.',
+  'the full list lives on my beli → link in about ☕',
+];
+function foodRec(){toast('🍜 barb\'s nyc pick: '+foodSpots[Math.random()*foodSpots.length|0]);}
+
+/* ---------- command palette (⌘K or /) ---------- */
+const cmds=[
+  {n:'go: about',d:'who is barb',f:()=>go('about')},
+  {n:'go: projects',d:'the good stuff',f:()=>go('projects')},
+  {n:'go: experience',d:'the timeline',f:()=>go('experience')},
+  {n:'go: research',d:'papers & thoughts',f:()=>go('research')},
+  {n:'go: dance',d:'the differentiator',f:()=>go('dance')},
+  {n:'go: contact',d:'say hi',f:()=>go('contact')},
+  {n:'roll the die',d:'let chance navigate',f:rollDie},
+  {n:'food rec',d:'nyc picks · or press F',f:foodRec},
+  {n:'dance mode',d:'toggle · or press D',f:()=>danceMode()},
+  {n:'bunny rain',d:'???',f:bunnyRain},
+  {n:'hire barb',d:'good taste',f:()=>{go('contact');toast('good taste. the email button is right there ✉');}},
+];
+const pal=$('#palette'),pin=$('#palInput'),plist=$('#palList');
+let psel=0,pfil=cmds;
+function renderPal(){
+  const q=pin.value.toLowerCase();
+  pfil=cmds.filter(c=>(c.n+c.d).toLowerCase().includes(q));
+  if(psel>=pfil.length)psel=0;
+  plist.innerHTML=pfil.map((c,i)=>
+    `<div class="pal-item${i===psel?' sel':''}" data-i="${i}"><span>${c.n}</span><span class="desc">${c.d}</span></div>`
+  ).join('')||'<div class="pal-item"><span>no match. try "roll"</span></div>';
+}
+function openPal(){pal.classList.add('open');pin.value='';psel=0;renderPal();setTimeout(()=>pin.focus(),30);}
+function closePal(){pal.classList.remove('open');pin.blur();}
+pin.addEventListener('input',()=>{psel=0;renderPal();});
+pin.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){psel=Math.min(psel+1,pfil.length-1);renderPal();e.preventDefault();}
+  else if(e.key==='ArrowUp'){psel=Math.max(psel-1,0);renderPal();e.preventDefault();}
+  else if(e.key==='Enter'&&pfil[psel]){closePal();pfil[psel].f();}
+  else if(e.key==='Escape')closePal();
+});
+plist.addEventListener('click',e=>{
+  const it=e.target.closest('.pal-item');
+  if(it&&it.dataset.i!==undefined&&pfil[+it.dataset.i]){closePal();pfil[+it.dataset.i].f();}
+});
+pal.addEventListener('click',e=>{if(e.target===pal)closePal();});
+
+/* ---------- blinking status ---------- */
+setInterval(()=>{
+  const s=$('#statusBlink');
+  s.textContent=s.textContent.endsWith('_')?s.textContent.slice(0,-1):s.textContent+'_';
+},530);
+
+/* ---------- visitor counter joke ---------- */
+$('#visitor').textContent='#'+(4721+Math.floor(Math.random()*300)).toLocaleString().padStart(5,'0');
+
+/* ---------- console easter egg ---------- */
+console.log('%c hi, you found the console. ','background:#2433ff;color:#fff;font-size:16px;padding:8px;');
+console.log('%c email me: hz3018@columbia.edu. bonus points for mentioning this. ','font-family:monospace');
+})();
+</script>
+</body>
+</html>
